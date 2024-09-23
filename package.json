@@ -1,0 +1,18 @@
+{
+  "name": "gfv2ui-newver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "uyenntv",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^9.0.1",
+    "cypress": "^13.14.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3"
+  }
+}

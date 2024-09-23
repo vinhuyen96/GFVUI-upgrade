@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "cypress/globals": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:cypress/recommended",
+    "plugin:prettier/recommended"  // Add this line to enable Prettier
+  ],
+  "plugins": [
+    "cypress",
+    "prettier"  // Enable the Prettier plugin
+  ],
+  "rules": {
+    "prettier/prettier": "error",  // Prettier errors are shown as ESLint errors
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}
