@@ -1,17 +1,12 @@
-import AddNewModulePage from "../../support/pages/modules/AddNewModulePage";
-import { faker } from '@faker-js/faker';
+import ModulePage from "../../support/pages/modules/ModulePage";
 
 describe('Verify create new module successfully', () => {
-	const newModulePage = new AddNewModulePage()
+	const newModulePage = new ModulePage()
 	beforeEach(() => {
 		cy.login()
 	})
 	it('create a new module successfully', () => {
-		newModulePage.navigate(`${Cypress.config().baseUrl}Home/V2#/module/create`)
-		newModulePage.enterInternalName(faker.person.firstName())
-		newModulePage.enterDisplayName(faker.person.firstName())
-		newModulePage.enterDescription(faker.lorem.paragraph())
-		newModulePage.submitForm()
+		newModulePage.createNewModule()
 	});
 
 })

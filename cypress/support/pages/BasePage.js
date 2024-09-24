@@ -1,5 +1,4 @@
 class BasePage {
-
 	navigate(url) {
 		cy.visit(url)
 	}
