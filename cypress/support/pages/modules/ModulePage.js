@@ -1,65 +1,72 @@
 import HomePage from '../home/HomePage';
-import {faker} from "@faker-js/faker";
+import BasePage from '../BasePage';
 
-class ModulePage extends HomePage {
+class ModulePage extends BasePage {
   constructor() {
     super();
-    this.internalName = 'input[name="name"]';
-    this.displayName = '[placeholder="Display Name"]';
-    this.description = '[placeholder="Description"';
+    //Declare object
+    this.homePage = new HomePage();
+
+    //Input data
+    this.inputInternalName = 'input[name="name"]';
+    this.inputDisplayName = '[placeholder="Display Name"]';
     this.btnSubmit = 'button[type="submit"]';
-    this.createNewModuleSuccessfullyMsg = 'Select Workflow Process';
+
+    //Message verify
+    this.messageCreatedSuccess = 'Select Workflow Process';
   }
-  enterInternalName(internalName) {
-    this.typeInInput(this.internalName, internalName);
-  }
-  enterDisplayName(displayName) {
-    this.typeInInput(this.displayName, displayName);
-  }
-  enterDescription(des) {
-    this.typeInInput(this.description, des);
-  }
+
   submitForm() {
     this.clickElement(this.btnSubmit);
   }
+
   verifyAddNewModuleSuccessfully() {
-    this.verifyTextInBody(this.createNewModuleSuccessfullyMsg);
+    this.verifyTextInBody(this.messageCreatedSuccess);
   }
-  createNewModule() {
-    this.navigate(`${Cypress.config().baseUrl}Home/V2#/module/create`)
-    const module = faker.person.firstName()
-    this.enterInternalName(module)
-    this.enterDisplayName(faker.person.firstName())
-    this.enterDescription(faker.lorem.paragraph())
-    this.submitForm()
-    this.verifyAddNewModuleSuccessfully()
+
+  createNewModule(module) {
+    cy.log('abc');
+    this.navigate(`${Cypress.config().baseUrl}/Home/V2#/module/create`);
+    this.typeInInput(this.inputInternalName, module);
+    this.typeInInput(this.inputDisplayName, module);
+    this.submitForm();
+    this.verifyAddNewModuleSuccessfully();
   }
+
   editModule(module) {
-    cy.log('editModule: ' + module);
-    cy.xpath(
-      `//a[text()="${module}"]/../..//span[contains(@class,"glyphicon-pencil")]`
-    ).click();
+    cy.log('The' + module + 'module is editing');
+    cy.get('td.vertical-table-centering a')
+      .contains(module)
+      .find('span .glyphicon glyphicon-pencil')
+      .click();
   }
+
   trackOpeningOfItems(module) {
-    cy.log('trackOpeningOfItems');
+    cy.log('Track Opening Of Items');
     this.editModule(module);
     cy.get('#advancedToggle').click();
-    cy.xpath('//label[contains(.,"Track opening/reading of items")]/input')
+    cy.get('label')
+      .contains('Track opening/reading of items')
       .uncheck({ force: true })
-      .check({ force: true })
+      .check({ force: true });
     cy.get('button[type="submit"]').click();
   }
-  untrackOpeningOfItems(module) {
-    cy.log('untrackOpeningOfItems')
 
-    this.editModule(module)
-    cy.get('#advancedToggle').click()
-    cy.xpath('//label[contains(.,"Track opening/reading of items")]/input').check({force: true}).uncheck({force: true})
-    cy.get('button[type="submit"]').click()
-    cy.reload()
+  untrackOpeningOfItems(module) {
+    cy.log(' Uncheck track Opening Of Items');
+
+    this.editModule(module);
+    cy.get('#advancedToggle').click();
+    cy.get('label')
+      .contains('Track opening/reading of items')
+      .check({ force: true })
+      .uncheck({ force: true });
+    this.clickElement('button[type="submit"]');
+    cy.reload();
   }
+
   openModulePage(module) {
-    this.selectLeftMenu(module);
+    this.homePage.selectLeftMenu(module);
   }
 }
 export default ModulePage;

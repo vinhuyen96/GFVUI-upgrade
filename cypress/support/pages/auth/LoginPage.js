@@ -1,32 +1,26 @@
 import BasePage from '../BasePage';
 
 class LoginPage extends BasePage {
-	constructor() {
-		super();
-		this.userEmail = 'input[name="Email"]'
-		this.userPassword = 'input[name="Password"]'
-		this.loginButton = 'input[name="Login"]'
-	}
+  constructor() {
+    super();
+    this.inputUserEmail = 'input[name="Email"]';
+    this.inputUserPassword = 'input[name="Password"]';
+    this.btnLogin = 'input[name="Login"]';
+  }
 
-	enterUserEmail(email) {
-		this.typeInInput(this.userEmail, email)
-	}
+  verifyLoginSuccess() {
+    this.verifyTextInBody('Home');
+  }
 
-	enterUserPassword(password) {
-		this.typeInInput(this.userPassword, password)
-	}
+  login(email, password) {
+    this.typeInInput(this.inputUserEmail, email);
+    this.typeInInput(this.inputUserPassword, password);
+    this.clickElement(this.btnLogin);
+  }
 
-	clickLogin() {
-		this.clickElement(this.loginButton)
-	}
-
-	verifyLoginSuccess() {
-		this.verifyTextInBody('Home')
-	}
-
-	verifyLoginFailure() {
-		//cy.get('body').should('contain', 'User or Password is not valid')
-	}
+  verifyLoginFailure() {
+    //cy.get('body').should('contain', 'User or Password is not valid')
+  }
 }
 
-export default LoginPage
+export default LoginPage;
