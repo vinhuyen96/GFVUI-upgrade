@@ -5,7 +5,7 @@
     "cypress/globals": true
   },
   "extends": [
-    "eslint:recommended",
+    "eslint:recommended", // Add this line to enable Prettier
     "plugin:cypress/recommended",
     "plugin:prettier/recommended"  // Add this line to enable Prettier
   ],
@@ -14,8 +14,11 @@
     "prettier"  // Enable the Prettier plugin
   ],
   "rules": {
-    "prettier/prettier": "error",  // Prettier errors are shown as ESLint errors
     "no-unused-vars": "warn",
     "no-console": "off"
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   }
 }

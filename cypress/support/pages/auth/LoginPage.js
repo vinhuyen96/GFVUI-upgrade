@@ -1,6 +1,6 @@
-import BasePage from '../BasePage';
+import GeneralAction from '../common/GeneralAction';
 
-class LoginPage extends BasePage {
+class LoginPage extends GeneralAction {
   constructor() {
     super();
     this.inputUserEmail = 'input[name="Email"]';
@@ -9,7 +9,7 @@ class LoginPage extends BasePage {
   }
 
   verifyLoginSuccess() {
-    this.verifyTextInBody('Home');
+    this.verifyHasText('Home');
   }
 
   login(email, password) {

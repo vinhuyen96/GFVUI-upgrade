@@ -1,7 +1,7 @@
-import HomePage from '../home/HomePage';
-import BasePage from '../BasePage';
+import HomePage from '../BasePage';
+import GeneralAction from '../common/GeneralAction';
 
-class ModulePage extends BasePage {
+class ModulePage extends GeneralAction {
   constructor() {
     super();
     //Declare object
@@ -11,29 +11,26 @@ class ModulePage extends BasePage {
     this.inputInternalName = 'input[name="name"]';
     this.inputDisplayName = '[placeholder="Display Name"]';
     this.btnSubmit = 'button[type="submit"]';
+    this.toggleAdvance = '#advancedToggle';
 
     //Message verify
     this.messageCreatedSuccess = 'Select Workflow Process';
   }
 
-  submitForm() {
-    this.clickElement(this.btnSubmit);
-  }
-
   verifyAddNewModuleSuccessfully() {
-    this.verifyTextInBody(this.messageCreatedSuccess);
+    this.verifyHasText(this.messageCreatedSuccess);
   }
 
   createNewModule(module) {
     this.navigate('/Home/V2#/module/create');
     this.typeInInput(this.inputInternalName, module);
     this.typeInInput(this.inputDisplayName, module);
-    this.submitForm();
+    this.clickElement(this.btnSubmit);
     this.verifyAddNewModuleSuccessfully();
   }
 
   editModule(module) {
-    cy.log('The' + module + 'module is editing');
+    cy.log(`The ${module} module is editing`);
     cy.get('td.vertical-table-centering a')
       .contains(module)
       .parents('tr')
@@ -43,31 +40,26 @@ class ModulePage extends BasePage {
 
   trackOpeningOfItems(module) {
     cy.log('Track Opening Of Items');
+
     this.editModule(module);
-    cy.get('#advancedToggle').click();
-    // cy.get('label')
-    //   .contains('Track opening/reading of items')
-    //   .uncheck({ force: true })
-    //   .check({ force: true });
+    this.clickElement(this.toggleAdvance);
     cy.get('label:contains("Track opening/reading of items")')
       .parent()
       .find('input[type="checkbox"]')
-      .uncheck({ force: true })
       .check({ force: true });
-    this.clickElement('button[type="submit"]');
+    this.clickElement(this.btnSubmit);
   }
 
   untrackOpeningOfItems(module) {
     cy.log(' Uncheck track Opening Of Items');
 
     this.editModule(module);
-    cy.get('#advancedToggle').click();
+    this.clickElement(this.toggleAdvance);
     cy.get('label')
       .contains('Track opening/reading of items')
       .parent()
-      .check({ force: true })
       .uncheck({ force: true });
-    this.clickElement('button[type="submit"]');
+    this.clickElement(this.btnSubmit);
     cy.reload();
   }
 
@@ -76,13 +68,14 @@ class ModulePage extends BasePage {
   }
 
   deleteModule(module) {
-    cy.log('deleteModule: ' + module);
+    cy.log(`deleteModule: ${module}`);
+
     cy.get('td.vertical-table-centering a')
       .contains(module)
       .parents('tr')
       .find('.glyphicon-remove')
       .click();
-    cy.get('.btn btn-danger').click();
+    this.clickContainsElement('button', 'Delete');
   }
 }
 export default ModulePage;

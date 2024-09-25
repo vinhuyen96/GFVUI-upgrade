@@ -1,8 +1,18 @@
-import BasePage from '../BasePage';
+import GeneralAction from '../common/GeneralAction';
 
-class GridPage extends BasePage {
+class GridPage extends GeneralAction {
   constructor() {
     super();
+  }
+
+  checkTheRequestIsUnread(record) {
+    cy.log('Check the envelope is closed');
+    cy.get('.dx-icon.fas.fa-envelope-open').should('exist');
+  }
+
+  checkTheRequestIsRead(record) {
+    cy.log('Check the envelope is opend');
+    cy.get('.dx-icon.fas.fa-envelope-open').should('not.exist');
   }
 
   createNewItem() {
@@ -10,8 +20,17 @@ class GridPage extends BasePage {
       .contains('NEW')
       .should('be.visible')
       .click();
-    cy.log('abc');
-    cy.get('button').contains('Submit').click();
+    this.clickContainsElement('button', 'Submit');
+  }
+
+  markFirstItemAsUnread() {
+    cy.get('table tr .fa-envelope-open').first().click();
+    cy.wait(2000); // Wait for animation
+  }
+
+  markFirstItemAsRead() {
+    cy.get('table tr .fa-envelope').first().click();
+    cy.wait(2000); // Wait for animation
   }
 }
 
