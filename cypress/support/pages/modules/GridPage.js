@@ -36,10 +36,11 @@ class GridPage extends BasePage {
   }
 
   createNewItem() {
-    cy.get('dx-button-content .dx-button-text')
+    cy.get('.dx-button-content .dx-button-text')
       .contains('NEW')
       .should('be.visible')
       .click();
+    cy.log('abc');
     cy.get('button').contains('Submit').click();
   }
 

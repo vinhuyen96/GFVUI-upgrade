@@ -13,6 +13,7 @@ class LoginPage extends BasePage {
   }
 
   login(email, password) {
+    this.navigate('/');
     this.typeInInput(this.inputUserEmail, email);
     this.typeInInput(this.inputUserPassword, password);
     this.clickElement(this.btnLogin);

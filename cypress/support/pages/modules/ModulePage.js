@@ -25,8 +25,7 @@ class ModulePage extends BasePage {
   }
 
   createNewModule(module) {
-    cy.log('abc');
-    this.navigate(`${Cypress.config().baseUrl}/Home/V2#/module/create`);
+    this.navigate('/Home/V2#/module/create');
     this.typeInInput(this.inputInternalName, module);
     this.typeInInput(this.inputDisplayName, module);
     this.submitForm();
@@ -37,7 +36,8 @@ class ModulePage extends BasePage {
     cy.log('The' + module + 'module is editing');
     cy.get('td.vertical-table-centering a')
       .contains(module)
-      .find('span .glyphicon glyphicon-pencil')
+      .parents('tr')
+      .find('.glyphicon-pencil')
       .click();
   }
 
@@ -45,11 +45,16 @@ class ModulePage extends BasePage {
     cy.log('Track Opening Of Items');
     this.editModule(module);
     cy.get('#advancedToggle').click();
-    cy.get('label')
-      .contains('Track opening/reading of items')
+    // cy.get('label')
+    //   .contains('Track opening/reading of items')
+    //   .uncheck({ force: true })
+    //   .check({ force: true });
+    cy.get('label:contains("Track opening/reading of items")')
+      .parent()
+      .find('input[type="checkbox"]')
       .uncheck({ force: true })
       .check({ force: true });
-    cy.get('button[type="submit"]').click();
+    this.clickElement('button[type="submit"]');
   }
 
   untrackOpeningOfItems(module) {
@@ -59,6 +64,7 @@ class ModulePage extends BasePage {
     cy.get('#advancedToggle').click();
     cy.get('label')
       .contains('Track opening/reading of items')
+      .parent()
       .check({ force: true })
       .uncheck({ force: true });
     this.clickElement('button[type="submit"]');
@@ -67,6 +73,16 @@ class ModulePage extends BasePage {
 
   openModulePage(module) {
     this.homePage.selectLeftMenu(module);
+  }
+
+  deleteModule(module) {
+    cy.log('deleteModule: ' + module);
+    cy.get('td.vertical-table-centering a')
+      .contains(module)
+      .parents('tr')
+      .find('.glyphicon-remove')
+      .click();
+    cy.get('.btn btn-danger').click();
   }
 }
 export default ModulePage;

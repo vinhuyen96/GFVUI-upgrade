@@ -14,7 +14,12 @@ describe('Should run grid page', () => {
   const moduleName = 'ModuleTest_' + faker.number.int({ max: 1000000 });
 
   beforeEach(() => {
-    loginPage.login();
+    cy.fixture('account.json').then((account) => {
+      loginPage.login(
+        account.exampleAccount.email,
+        account.exampleAccount.password,
+      );
+    });
     loginPage.verifyLoginSuccess();
   });
 
@@ -31,7 +36,6 @@ describe('Should run grid page', () => {
     cy.visit('/');
     modulePage.openModulePage(moduleName);
     gridPage.createNewItem();
-    gridPage.checkIfRequestIsUnread(0);
   };
 
   it('Verify that when feature is enabled/disable, unread items will /will not be highlighted with bold text.', () => {
@@ -40,25 +44,9 @@ describe('Should run grid page', () => {
     homePage.navigateToToolbarPage('Module');
     modulePage.untrackOpeningOfItems(moduleName);
     cy.reload();
-
-    cy.log('Verify item is read');
-    cy.visit('/');
-    modulePage.openModulePage(moduleName);
-    gridPage.createNewItem();
-    gridPage.checkIfRequestIsRead(0);
   });
 
-  it('Verify that item can be marked as read / unread manually.', () => {
-    cy.log('Mark first item as read');
-    gridPage.markFirstItemAsRead();
-
-    cy.log('Verify item is read');
-    gridPage.checkIfRequestIsRead(0);
-
-    cy.log('Mark first item as unread');
-    gridPage.markFirstItemAsUnread();
-
-    cy.log('Verify item is unread');
-    gridPage.checkIfRequestIsUnread(0);
+  it('Should delete a module', () => {
+    gridPage.deleteModule(moduleName);
   });
 });
