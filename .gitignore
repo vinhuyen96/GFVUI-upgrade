@@ -2,3 +2,5 @@ node_modules
 **/*.test.ts
 .idea
 /credentials.json
+.env
+/GFV2UI-newVer.iml
