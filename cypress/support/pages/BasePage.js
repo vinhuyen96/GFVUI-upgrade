@@ -3,6 +3,7 @@ import GeneralAction from './common/GeneralAction';
 class BasePage extends GeneralAction {
   constructor() {
     super();
+    this.statusOfDrawerMenu = '.dx-drawer-opened';
   }
 
   navigateToToolbarPage(page) {
@@ -13,23 +14,23 @@ class BasePage extends GeneralAction {
    * open left menu
    */
   openLeftMenu() {
-    // Confirm that the drawer is not open before clicking the menu icon
-    cy.get('body')
-      .find('.dx-drawer-opened')
-      .should('have.length', 0)
-      .then(() => {
-        cy.get('.dx-icon-menu').click();
-      });
+    cy.get('body').then(($body) => {
+      if ($body.find(this.statusOfDrawerMenu).length === 0) {
+        this.clickElement('.dx-icon-menu');
+      }
+    });
   }
 
-  closeLeftMenu(action) {
+  /**
+   * Close left menu
+   */
+  closeLeftMenu() {
     // Make sure drawer is present before executing the click action.
-    cy.get('body')
-      .find('.dx-drawer-opened')
-      .should('exist')
-      .then(() => {
-        cy.get('.menu-button').click();
-      });
+    cy.get('body').then(($body) => {
+      if ($body.find(this.statusOfDrawerMenu).length !== 0) {
+        this.clickElement('.menu-button');
+      }
+    });
   }
 
   selectLeftMenu(item) {

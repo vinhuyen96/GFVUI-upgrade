@@ -5,21 +5,26 @@ class GridPage extends GeneralAction {
     super();
   }
 
-  checkTheRequestIsUnread(record) {
+  checkTheRequestIsUnread() {
     cy.log('Check the envelope is closed');
-    cy.get('.dx-icon.fas.fa-envelope-open').should('exist');
+    cy.get('.dx-datagrid-text-content')
+      .contains('Actions')
+      .invoke('css', 'width', '500px')
+      .trigger('change');
+    cy.get('.dx-icon.fas.fa-envelope-open').should('be.visible');
   }
 
-  checkTheRequestIsRead(record) {
-    cy.log('Check the envelope is opend');
-    cy.get('.dx-icon.fas.fa-envelope-open').should('not.exist');
+  checkTheRequestIsRead() {
+    cy.get('.dx-datagrid-text-content')
+      .contains('Actions')
+      .invoke('css', 'width', '500px')
+      .trigger('change');
+    cy.log('Check the envelope is opened');
+    cy.get('.dx-icon.fas.fa-envelope-open').should('not.be.visible');
   }
 
   createNewItem() {
-    cy.get('.dx-button-content .dx-button-text')
-      .contains('NEW')
-      .should('be.visible')
-      .click();
+    cy.get('.dx-button-content .dx-button-text').contains('NEW').click();
     this.clickContainsElement('button', 'Submit');
   }
 

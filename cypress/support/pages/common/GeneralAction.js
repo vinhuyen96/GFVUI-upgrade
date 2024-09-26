@@ -18,4 +18,8 @@ export default class GeneralAction {
   verifyHasText(text) {
     cy.get('body').should('contain', text);
   }
+
+  loadPage() {
+    cy.reload();
+  }
 }

@@ -1,10 +1,10 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://cypressdev.stratawise.com/',
     testIsolation: true,
-    defaultCommandTimeout: 30000,
+    defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
     viewportWidth: 1366, // the most suitable screen for the desktop website
     viewportHeight: 768, // the most suitable screen for the desktop website
@@ -17,7 +17,7 @@ module.exports = defineConfig({
       // Configure retry attempts for `cypress run`
       runMode: 2,
       // Configure retry attempts for `cypress open`
-      openMode: 0
+      openMode: 0,
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here

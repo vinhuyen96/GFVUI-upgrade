@@ -1,19 +1,19 @@
-import HomePage from '../BasePage';
+import BasePage from '../BasePage';
 import GeneralAction from '../common/GeneralAction';
 
 class ModulePage extends GeneralAction {
   constructor() {
     super();
-    //Declare object
-    this.homePage = new HomePage();
+    // Declare object
+    this.basePage = new BasePage();
 
-    //Input data
+    // Input data
     this.inputInternalName = 'input[name="name"]';
     this.inputDisplayName = '[placeholder="Display Name"]';
     this.btnSubmit = 'button[type="submit"]';
     this.toggleAdvance = '#advancedToggle';
 
-    //Message verify
+    // Message verify
     this.messageCreatedSuccess = 'Select Workflow Process';
   }
 
@@ -27,6 +27,8 @@ class ModulePage extends GeneralAction {
     this.typeInInput(this.inputDisplayName, module);
     this.clickElement(this.btnSubmit);
     this.verifyAddNewModuleSuccessfully();
+    this.clickContainsElement('.navigation-item h4', 'Inventory');
+    cy.get(this.btnSubmit).contains('Save').should('be.visible').click();
   }
 
   editModule(module) {
@@ -38,7 +40,7 @@ class ModulePage extends GeneralAction {
       .click();
   }
 
-  trackOpeningOfItems(module) {
+  checkTrackOpeningOfItems(module) {
     cy.log('Track Opening Of Items');
 
     this.editModule(module);
@@ -50,25 +52,25 @@ class ModulePage extends GeneralAction {
     this.clickElement(this.btnSubmit);
   }
 
-  untrackOpeningOfItems(module) {
+  uncheckTrackOpeningOfItems(module) {
     cy.log(' Uncheck track Opening Of Items');
 
     this.editModule(module);
     this.clickElement(this.toggleAdvance);
-    cy.get('label')
-      .contains('Track opening/reading of items')
+    cy.get('label:contains("Track opening/reading of items")')
       .parent()
+      .find('input[type="checkbox"]')
       .uncheck({ force: true });
     this.clickElement(this.btnSubmit);
-    cy.reload();
+    this.loadPage();
   }
 
   openModulePage(module) {
-    this.homePage.selectLeftMenu(module);
+    this.basePage.selectLeftMenu(module);
   }
 
   deleteModule(module) {
-    cy.log(`deleteModule: ${module}`);
+    cy.log(`Delete: ${module}`);
 
     cy.get('td.vertical-table-centering a')
       .contains(module)
