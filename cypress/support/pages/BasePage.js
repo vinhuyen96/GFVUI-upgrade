@@ -1,4 +1,4 @@
-import GeneralAction from './common/GeneralAction';
+import GeneralAction from '../common/GeneralAction';
 
 class BasePage extends GeneralAction {
   constructor() {
@@ -6,6 +6,10 @@ class BasePage extends GeneralAction {
     this.statusOfDrawerMenu = '.dx-drawer-opened';
   }
 
+  /**
+   * Navigate to route when click on header
+   * @param page
+   */
   navigateToToolbarPage(page) {
     this.clickContainsElement('dx-toolbar a.toolbar-label', page);
   }
@@ -33,6 +37,10 @@ class BasePage extends GeneralAction {
     });
   }
 
+  /**
+   * Click on element on Drawer
+   * @param item
+   */
   selectLeftMenu(item) {
     this.openLeftMenu();
     this.clickContainsElement('.dx-treeview-node-container', item);

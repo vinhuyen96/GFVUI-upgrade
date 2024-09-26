@@ -1,4 +1,4 @@
-import GeneralAction from '../common/GeneralAction';
+import GeneralAction from '../../common/GeneralAction';
 
 class LoginPage extends GeneralAction {
   constructor() {

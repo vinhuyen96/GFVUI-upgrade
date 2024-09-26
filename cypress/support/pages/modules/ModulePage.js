@@ -1,11 +1,8 @@
 import BasePage from '../BasePage';
-import GeneralAction from '../common/GeneralAction';
 
-class ModulePage extends GeneralAction {
+class ModulePage extends BasePage {
   constructor() {
     super();
-    // Declare object
-    this.basePage = new BasePage();
 
     // Input data
     this.inputInternalName = 'input[name="name"]';
@@ -18,7 +15,7 @@ class ModulePage extends GeneralAction {
   }
 
   verifyAddNewModuleSuccessfully() {
-    this.verifyHasText(this.messageCreatedSuccess);
+    return this.verifyHasText(this.messageCreatedSuccess);
   }
 
   createNewModule(module) {
@@ -29,6 +26,7 @@ class ModulePage extends GeneralAction {
     this.verifyAddNewModuleSuccessfully();
     this.clickContainsElement('.navigation-item h4', 'Inventory');
     cy.get(this.btnSubmit).contains('Save').should('be.visible').click();
+    return this;
   }
 
   editModule(module) {
@@ -38,6 +36,7 @@ class ModulePage extends GeneralAction {
       .parents('tr')
       .find('.glyphicon-pencil')
       .click();
+    return this;
   }
 
   checkTrackOpeningOfItems(module) {
@@ -50,6 +49,7 @@ class ModulePage extends GeneralAction {
       .find('input[type="checkbox"]')
       .check({ force: true });
     this.clickElement(this.btnSubmit);
+    return this;
   }
 
   uncheckTrackOpeningOfItems(module) {
@@ -63,10 +63,12 @@ class ModulePage extends GeneralAction {
       .uncheck({ force: true });
     this.clickElement(this.btnSubmit);
     this.loadPage();
+    return this;
   }
 
   openModulePage(module) {
-    this.basePage.selectLeftMenu(module);
+    this.selectLeftMenu(module);
+    return this;
   }
 
   deleteModule(module) {
@@ -78,6 +80,7 @@ class ModulePage extends GeneralAction {
       .find('.glyphicon-remove')
       .click();
     this.clickContainsElement('button', 'Delete');
+    return this;
   }
 }
 export default ModulePage;
