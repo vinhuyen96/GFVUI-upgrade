@@ -25,6 +25,16 @@ export default class GeneralAction {
   }
 
   /**
+   * Click on a element which contain some text that has assertion
+   * @param selector
+   * @param content
+   * @param condition
+   */
+  clickContainsElementHasAssertion(selector, content, condition) {
+    cy.get(selector).contains(content).should(condition).click();
+  }
+
+  /**
    * Input data to field
    * @param selector
    * @param text
@@ -54,5 +64,13 @@ export default class GeneralAction {
    */
   log(text) {
     cy.log(text);
+  }
+
+  assertionContainsShould(selector, content, attribute) {
+    cy.get(selector).contains(content).should(attribute);
+  }
+
+  assertionShould(selector, attribute) {
+    cy.get(selector).should(attribute);
   }
 }

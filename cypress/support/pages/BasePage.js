@@ -46,5 +46,10 @@ class BasePage extends GeneralAction {
     this.clickContainsElement('.dx-treeview-node-container', item);
     this.closeLeftMenu();
   }
+
+  verifyHomePageIsOpen() {
+    this.log('verify V2 HomePage Is Open');
+    cy.get('.menu-button').should('be.visible');
+  }
 }
 export default BasePage;

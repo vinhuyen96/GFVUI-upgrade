@@ -25,12 +25,13 @@ class ModulePage extends BasePage {
     this.clickElement(this.btnSubmit);
     this.verifyAddNewModuleSuccessfully();
     this.clickContainsElement('.navigation-item h4', 'Inventory');
-    cy.get(this.btnSubmit).contains('Save').should('be.visible').click();
+    this.clickContainsElementHasAssertion(this.btnSubmit, 'Save', 'be.visible');
     return this;
   }
 
   editModule(module) {
-    cy.log(`The ${module} module is editing`);
+    this.log(`The ${module} module is editing`);
+
     cy.get('td.vertical-table-centering a')
       .contains(module)
       .parents('tr')
@@ -40,7 +41,7 @@ class ModulePage extends BasePage {
   }
 
   checkTrackOpeningOfItems(module) {
-    cy.log('Track Opening Of Items');
+    this.log('Track Opening Of Items');
 
     this.editModule(module);
     this.clickElement(this.toggleAdvance);
@@ -53,7 +54,7 @@ class ModulePage extends BasePage {
   }
 
   uncheckTrackOpeningOfItems(module) {
-    cy.log(' Uncheck track Opening Of Items');
+    this.log(' Uncheck track Opening Of Items');
 
     this.editModule(module);
     this.clickElement(this.toggleAdvance);
@@ -72,7 +73,7 @@ class ModulePage extends BasePage {
   }
 
   deleteModule(module) {
-    cy.log(`Delete: ${module}`);
+    this.log(`Delete: ${module}`);
 
     cy.get('td.vertical-table-centering a')
       .contains(module)
