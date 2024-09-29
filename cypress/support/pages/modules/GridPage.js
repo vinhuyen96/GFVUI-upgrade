@@ -1,9 +1,9 @@
-import GeneralAction from '../../common/GeneralAction';
 import BasePage from '../BasePage';
 
 class GridPage extends BasePage {
   constructor() {
     super();
+    this.iconEnvelopOpen = '.dx-icon.fas.fa-envelope-open';
   }
 
   checkTheRequestIsUnread() {
@@ -12,7 +12,7 @@ class GridPage extends BasePage {
       .contains('Actions')
       .invoke('css', 'width', '500px')
       .trigger('change');
-    cy.get('.dx-icon.fas.fa-envelope-open').should('exist');
+    this.verifyShould(this.iconEnvelopOpen, 'exist');
   }
 
   checkTheRequestIsRead() {
@@ -21,23 +21,23 @@ class GridPage extends BasePage {
       .invoke('css', 'width', '500px')
       .trigger('change');
     this.log('Check the envelope is opened');
-    cy.get('.dx-icon.fas.fa-envelope-open').should('not.exist');
+    this.verifyShould(this.iconEnvelopOpen, 'not.exist');
   }
 
   createNewItem() {
-    this.clickContainsElement('.dx-button-content .dx-button-text', 'NEW');
-    this.clickContainsElement('button', 'Submit');
+    this.clickElementContains('.dx-button-content .dx-button-text', 'NEW');
+    this.clickElementContains('button', 'Submit');
   }
 
   markFirstItemAsUnread() {
-    cy.get('table tr .fa-envelope-open').first().click();
-    cy.get('table tr .fa-envelope').first().should('be.visible'); //replace for cy.wait
+    this.clickFirstElement('table tr .fa-envelope-open');
+    // cy.get('table tr .fa-envelope').first().should('exist'); //replace for cy.wait
     // cy.wait(2000); // Wait for animation
   }
 
   markFirstItemAsRead() {
-    cy.get('table tr .fa-envelope').first().click();
-    cy.get('table tr .fa-envelope-open').first().should('be.visible'); // same as line 34
+    this.clickFirstElement('table tr .fa-envelope');
+    // cy.get('table tr .fa-envelope-open').first().should('exist'); // same as line 34
     // cy.wait(2000); // Wait for animation
   }
 }

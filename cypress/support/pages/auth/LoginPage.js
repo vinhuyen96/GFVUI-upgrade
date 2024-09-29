@@ -9,7 +9,7 @@ class LoginPage extends GeneralAction {
   }
 
   verifyLoginSuccess() {
-    this.verifyHasText('Home');
+    this.verifyHasText('body', 'Home');
   }
 
   login(email, password) {

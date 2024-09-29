@@ -11,7 +11,7 @@ class BasePage extends GeneralAction {
    * @param page
    */
   navigateToToolbarPage(page) {
-    this.clickContainsElement('dx-toolbar a.toolbar-label', page);
+    this.clickElementContains('dx-toolbar a.toolbar-label', page);
   }
 
   /**
@@ -23,6 +23,7 @@ class BasePage extends GeneralAction {
         this.clickElement('.dx-icon-menu');
       }
     });
+    return this;
   }
 
   /**
@@ -35,6 +36,7 @@ class BasePage extends GeneralAction {
         this.clickElement('.menu-button');
       }
     });
+    return this;
   }
 
   /**
@@ -43,13 +45,15 @@ class BasePage extends GeneralAction {
    */
   selectLeftMenu(item) {
     this.openLeftMenu();
-    this.clickContainsElement('.dx-treeview-node-container', item);
+    this.clickElementContains('.dx-treeview-node-container', item);
     this.closeLeftMenu();
+    return this;
   }
 
   verifyHomePageIsOpen() {
     this.log('verify V2 HomePage Is Open');
     cy.get('.menu-button').should('be.visible');
+    return this;
   }
 }
 export default BasePage;

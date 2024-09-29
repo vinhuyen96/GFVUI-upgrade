@@ -28,7 +28,7 @@ describe('Profile Test', () => {
   it('Change Password', () => {
     profilePage.changePassword(currentPassword, newPassword);
 
-    profilePage.assertionContainsShould(
+    profilePage.verifyShouldContains(
       'div',
       'Password changed successfully',
       'be.visible',
@@ -40,9 +40,9 @@ describe('Profile Test', () => {
 
   it('Remove Signature', () => {
     profilePage.addSignature();
-    profilePage.assertionShould('#dropzone-image', 'exist');
-    profilePage.clickContainsElement('a', 'Cancel');
+    profilePage.verifyShould('#dropzone-image', 'exist');
+    profilePage.clickElementContains('a', 'Cancel');
     // think the way to wait page load
-    profilePage.assertionShould('#dropzone-image', 'not.exist');
+    profilePage.verifyShould('#dropzone-image', 'not.exist');
   });
 });

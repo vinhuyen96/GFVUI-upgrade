@@ -9,13 +9,15 @@ class ModulePage extends BasePage {
     this.inputDisplayName = '[placeholder="Display Name"]';
     this.btnSubmit = 'button[type="submit"]';
     this.toggleAdvance = '#advancedToggle';
+    this.btn = 'button';
+    this.inputTrack = 'input[type="checkbox"]';
 
     // Message verify
     this.messageCreatedSuccess = 'Select Workflow Process';
   }
 
   verifyAddNewModuleSuccessfully() {
-    return this.verifyHasText(this.messageCreatedSuccess);
+    return this.verifyHasText('body', this.messageCreatedSuccess);
   }
 
   createNewModule(module) {
@@ -24,7 +26,7 @@ class ModulePage extends BasePage {
     this.typeInInput(this.inputDisplayName, module);
     this.clickElement(this.btnSubmit);
     this.verifyAddNewModuleSuccessfully();
-    this.clickContainsElement('.navigation-item h4', 'Inventory');
+    this.clickElementContains('.navigation-item h4', 'Inventory');
     this.clickContainsElementHasAssertion(this.btnSubmit, 'Save', 'be.visible');
     return this;
   }
@@ -47,7 +49,7 @@ class ModulePage extends BasePage {
     this.clickElement(this.toggleAdvance);
     cy.get('label:contains("Track opening/reading of items")')
       .parent()
-      .find('input[type="checkbox"]')
+      .find(this.inputTrack)
       .check({ force: true });
     this.clickElement(this.btnSubmit);
     return this;
@@ -60,7 +62,7 @@ class ModulePage extends BasePage {
     this.clickElement(this.toggleAdvance);
     cy.get('label:contains("Track opening/reading of items")')
       .parent()
-      .find('input[type="checkbox"]')
+      .find(this.inputTrack)
       .uncheck({ force: true });
     this.clickElement(this.btnSubmit);
     this.loadPage();
@@ -80,7 +82,7 @@ class ModulePage extends BasePage {
       .parents('tr')
       .find('.glyphicon-remove')
       .click();
-    this.clickContainsElement('button', 'Delete');
+    this.clickElementContains(this.btn, 'Delete');
     return this;
   }
 }

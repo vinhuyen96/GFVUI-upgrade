@@ -20,14 +20,14 @@ export default class GeneralAction {
    * @param selector
    * @param content
    */
-  clickContainsElement(selector, content) {
+  clickElementContains(selector, content) {
     cy.get(selector).contains(content).click();
   }
 
   /**
    * Click on a element which contain some text that has assertion
    * @param selector
-   * @param content
+   * @param content -Text that should be included
    * @param condition
    */
   clickContainsElementHasAssertion(selector, content, condition) {
@@ -35,20 +35,11 @@ export default class GeneralAction {
   }
 
   /**
-   * Input data to field
+   * Click the first element in list
    * @param selector
-   * @param text
    */
-  typeInInput(selector, text) {
-    cy.get(selector).type(text);
-  }
-
-  /**
-   * Assertion the text is existed
-   * @param text
-   */
-  verifyHasText(text) {
-    cy.get('body').should('contain', text);
+  clickFirstElement(selector) {
+    cy.get(selector).first().click();
   }
 
   /**
@@ -66,11 +57,35 @@ export default class GeneralAction {
     cy.log(text);
   }
 
-  assertionContainsShould(selector, content, attribute) {
-    cy.get(selector).contains(content).should(attribute);
+  /**
+   * Input data to field
+   * @param selector
+   * @param text
+   */
+  typeInInput(selector, text) {
+    cy.get(selector).type(text);
   }
 
-  assertionShould(selector, attribute) {
-    cy.get(selector).should(attribute);
+  /**
+   * Assertion the text is existed
+   * @param selector - The element that is selected
+   * @param text - Test should be included
+   */
+  verifyHasText(selector, text) {
+    cy.get(selector).should('contain', text);
+  }
+
+  /**
+   * Verify Text of selector with condition
+   * @param selector - The selector
+   * @param content
+   * @param condition
+   */
+  verifyShouldContains(selector, content, condition) {
+    cy.get(selector).contains(content).should(condition);
+  }
+
+  verifyShould(selector, condition) {
+    cy.get(selector).should(condition);
   }
 }

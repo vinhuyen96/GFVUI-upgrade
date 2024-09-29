@@ -7,7 +7,8 @@
   "extends": [
     "eslint:recommended", // Add this line to enable Prettier
     "plugin:cypress/recommended",
-    "plugin:prettier/recommended"  // Add this line to enable Prettier
+    "plugin:prettier/recommended" // Add this line to enable Prettier
+//    "airbnb"
   ],
   "plugins": [
     "cypress",
@@ -15,7 +16,17 @@
   ],
   "rules": {
     "no-unused-vars": "warn",
-    "no-console": "off"
+    "no-console": "off",
+    "prefer-destructuring": ["error", {
+      "array": true,
+      "object": true
+    }],
+    "prefer-template": "warn",
+//    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 1 }] //newline chained
+//    "no-unused-expressions": "off",
+//    "no-undef": "off",
+//    "prettier/prettier": "error",
+//    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   },
   "parserOptions": {
     "sourceType": "module",

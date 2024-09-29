@@ -23,15 +23,15 @@ describe('Should run grid page', () => {
 
   afterEach(() => {
     // To ensure that the deleteModule function runs after the tests
-    gridPage.log('Cleanup: Deleting the module');
-    it('Should delete a module', () => {
-      modulePage.navigateToToolbarPage('Module');
-      modulePage.deleteModule(moduleName);
-    });
+    modulePage.log(`Cleanup: Deleting the module${modulePage}`);
+    modulePage.navigate('Home/V2#/module');
+    moduleName
+      ? modulePage.deleteModule(moduleName)
+      : modulePage.log('Module not found to delete');
   });
 
   it('Verify that when feature is enabled/disable, unread items will /will not be highlighted with bold text.', () => {
-    const module = 'ModuleTest_' + faker.number.int({ max: 1000000 });
+    const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
     moduleName = module;
 
     modulePage.log('Create new module');
@@ -62,7 +62,7 @@ describe('Should run grid page', () => {
   });
 
   it('Verify that item can be marked as read / unread manually.', () => {
-    const module = 'ModuleTest_' + faker.number.int({ max: 1000000 });
+    const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
     moduleName = module;
 
     modulePage.log('Create new module');
