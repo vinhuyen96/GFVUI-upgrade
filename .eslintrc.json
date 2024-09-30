@@ -15,13 +15,13 @@
     "prettier"  // Enable the Prettier plugin
   ],
   "rules": {
-    "no-unused-vars": "warn",
+    "no-unused-vars":"warn",
     "no-console": "off",
     "prefer-destructuring": ["error", {
       "array": true,
       "object": true
     }],
-    "prefer-template": "warn",
+    "prefer-template": "warn"
 //    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 1 }] //newline chained
 //    "no-unused-expressions": "off",
 //    "no-undef": "off",

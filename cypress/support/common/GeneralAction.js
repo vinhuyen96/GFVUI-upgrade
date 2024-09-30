@@ -43,6 +43,15 @@ export default class GeneralAction {
   }
 
   /**
+   * Input data to field
+   * @param selector
+   * @param text
+   */
+  typeInInput(selector, text) {
+    cy.get(selector).type(text);
+  }
+
+  /**
    * Reload page
    */
   loadPage() {
@@ -55,15 +64,6 @@ export default class GeneralAction {
    */
   log(text) {
     cy.log(text);
-  }
-
-  /**
-   * Input data to field
-   * @param selector
-   * @param text
-   */
-  typeInInput(selector, text) {
-    cy.get(selector).type(text);
   }
 
   /**
