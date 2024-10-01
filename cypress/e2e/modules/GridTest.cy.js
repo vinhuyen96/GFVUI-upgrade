@@ -9,7 +9,7 @@ describe('Should run grid page', () => {
   const gridPage = new GridPage();
   const modulePage = new ModulePage();
 
-  let moduleName;
+  let moduleName = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
 
   beforeEach(() => {
     cy.fixture('account.json').then((account) => {
@@ -21,37 +21,35 @@ describe('Should run grid page', () => {
     loginPage.verifyLoginSuccess();
   });
 
-  afterEach(() => {
+  after(() => {
     // To ensure that the deleteModule function runs after the tests
     modulePage
       .log(`Cleanup: Deleting the module${modulePage}`)
       .navigateToPage('Module')
-      .verifyNavigatedToModule()
+      .verifyModulePageVisible()
       .deleteModule(moduleName);
   });
 
   it('Verify that when feature is enabled/disable, unread items will /will not be highlighted with bold text.', () => {
-    const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
-    moduleName = module;
-
     modulePage
       .log('Create new module')
-      .createNewModule(module)
+      .createNewModule(moduleName)
+
+      .log('Go to module page')
       .navigateToPage('Module')
 
       .log('Mark before edit module')
-      .editModule(module)
+      .editModule(moduleName)
 
       .log('Check at track opening of items')
       .checkTrackOpeningOfItems()
       .loadPage()
 
       .log('Verify item is unread')
-      .navigate('/')
-      .openModulePage(module);
+      .openModulePage(moduleName);
 
     gridPage
-      .log('Create new item')
+      .log('Create new item 1')
       .createNewItem()
       .checkTheRequestIsUnread();
 
@@ -60,7 +58,7 @@ describe('Should run grid page', () => {
       .navigateToPage('Module')
 
       .log('Edit module')
-      .editModule(module)
+      .editModule(moduleName)
 
       .log('Uncheck at track opening of items')
       .uncheckTrackOpeningOfItems()
@@ -68,22 +66,18 @@ describe('Should run grid page', () => {
 
     modulePage
       .log('Verify item is read')
-      .navigate('/')
-      .openModulePage(module);
+      .openModulePage(moduleName)
+      .log('went to module');
 
     gridPage
-      .log('Create new item')
+      .log('Create new item 2')
       .createNewItem()
-      .checkTheRequestIsRead(0);
+      .checkTheRequestIsRead();
   });
 
   it('Verify that item can be marked as read / unread manually.', () => {
-    const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
-    moduleName = module;
-
     modulePage
-      .log('Create new module')
-      .createNewModule(module)
+      .log('Navigate to module page')
       .navigateToPage('Module')
 
       .log('Edit module')
@@ -94,12 +88,12 @@ describe('Should run grid page', () => {
       .loadPage()
 
       .log('Verify item is unread')
-      .navigate('/')
       .openModulePage(moduleName);
 
     gridPage
-      .log('Creat new item')
-      .createNewItem()
+      // .log('Creat new item')
+      // .createNewItem()
+      .log('Check the request is unread ')
       .checkTheRequestIsUnread()
 
       .log('Mark first item as unread')

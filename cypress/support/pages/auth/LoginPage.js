@@ -9,14 +9,15 @@ class LoginPage extends GeneralAction {
   }
 
   verifyLoginSuccess() {
-    this.verifyHasText('header', 'Home');
+    return this.verifyHasText('header', 'Home');
   }
 
   login(email, password) {
-    this.navigate('/');
-    this.typeInInput(this.inputUserEmail, email);
-    this.typeInInput(this.inputUserPassword, password);
-    this.clickElement(this.btnLogin, 'be.visible');
+    return this
+      .navigate('/')
+      .typeInInput(this.inputUserEmail, email)
+      .typeInInput(this.inputUserPassword, password)
+      .clickElement(this.btnLogin);
   }
 
   // verifyLoginFailure() {

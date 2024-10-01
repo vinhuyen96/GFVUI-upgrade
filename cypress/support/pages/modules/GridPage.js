@@ -37,8 +37,8 @@ class GridPage extends BasePage {
 
   createNewItem() {
     return this
-      .clickElementContains(this.btnAddNewItem, 'NEW')
-      .clickElementContains(this.btnSubmit, 'Submit');
+      .clickElementContainsText(this.btnAddNewItem, 'NEW')
+      .clickElementContainsText(this.btnSubmit, 'Submit');
   }
 
   markFirstItemAsUnread() {
@@ -47,7 +47,8 @@ class GridPage extends BasePage {
   }
 
   markFirstItemAsRead() {
-    return this.clickFirstElement(this.iconEnvelopClosed);
+    return this
+      .clickFirstElement(this.iconEnvelopClosed);
   }
 }
 

@@ -41,7 +41,7 @@ describe('Profile Test', () => {
   it('Remove Signature', () => {
     profilePage.addSignature();
     profilePage.verifyShould('#dropzone-image', 'exist');
-    profilePage.clickElementContains('a', 'Cancel');
+    profilePage.clickElementContainsText('a', 'Cancel');
     // think the way to wait page load
     profilePage.verifyShould('#dropzone-image', 'not.exist');
   });

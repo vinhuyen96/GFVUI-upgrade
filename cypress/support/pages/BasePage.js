@@ -11,10 +11,10 @@ class BasePage extends GeneralAction {
 
   /**
    * Navigate to route when click on header
-   * @param page
+   * @param pageName
    */
-  navigateToPage(page) {
-    return this.clickElementContains(this.menuElement, page);
+  navigateToPage(pageName) {
+    return this.clickElementContainsText(this.menuElement, pageName);
   }
 
   /**
@@ -23,7 +23,7 @@ class BasePage extends GeneralAction {
   openLeftMenu() {
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length === 0) {
-        this.clickElement('.dx-icon-menu', 'be.visible');
+        this.clickElement('.dx-icon-menu');
       }
     });
     return this;
@@ -36,7 +36,7 @@ class BasePage extends GeneralAction {
     // Make sure drawer is present before executing the click action.
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length !== 0) {
-        this.clickElement(this.hamburgerBtn, 'be.visible');
+        this.clickElement(this.hamburgerBtn);
       }
     });
     return this;
@@ -48,7 +48,7 @@ class BasePage extends GeneralAction {
    */
   selectLeftMenu(item) {
     this.openLeftMenu();
-    this.clickElementContains(this.itemOnDrawer, item);
+    this.clickElementContainsText(this.itemOnDrawer, item);
     this.closeLeftMenu();
     return this;
   }

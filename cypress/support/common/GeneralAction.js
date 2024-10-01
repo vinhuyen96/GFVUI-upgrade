@@ -9,27 +9,30 @@ export default class GeneralAction {
   }
 
   /**
-   * Click on an element
-   * @param selector
-   * @param condition
-   * @param force
+   * Click on element
+   * @param selector - The selector
+   * @param isForce
+   * @returns {GeneralAction}
    */
-  clickElement(selector, condition, force = false) {
-    cy.get(selector).should(condition).click({force: force});
+  clickElement(selector, isForce = false) {
+    cy.get(selector).should('exist').click({force: isForce});
     return this;
   }
 
   /**
    * Click on an element which contains some text
    * @param selector
-   * @param content
+   * @param text
    * @param force
+   * @returns {GeneralAction}
    */
-  clickElementContains(selector, content, force = false) {
-    cy.get(selector).contains(content).click({force: force});
+  clickElementContainsText(selector, text, force = false) {
+    cy.get(selector).contains(text).click({force: force});
     return this;
   }
 
+
+  // Hàm này bị dư
   /**
    * Click on an element which contain some text that has assertion
    * @param selector
