@@ -19,9 +19,9 @@ class LoginPage extends GeneralAction {
     this.clickElement(this.btnLogin, 'be.visible');
   }
 
-  verifyLoginFailure() {
-    //cy.get('body').should('contain', 'User or Password is not valid')
-  }
+  // verifyLoginFailure() {
+  //   //cy.get('body').should('contain', 'User or Password is not valid')
+  // }
 }
 
 export default LoginPage;

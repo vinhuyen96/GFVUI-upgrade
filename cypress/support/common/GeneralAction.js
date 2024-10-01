@@ -20,7 +20,7 @@ export default class GeneralAction {
   }
 
   /**
-   * Click on a element which contains some text
+   * Click on an element which contains some text
    * @param selector
    * @param content
    * @param force
@@ -31,7 +31,7 @@ export default class GeneralAction {
   }
 
   /**
-   * Click on a element which contain some text that has assertion
+   * Click on an element which contain some text that has assertion
    * @param selector
    * @param content -Text that should be included
    * @param condition
