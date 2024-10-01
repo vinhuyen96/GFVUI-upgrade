@@ -15,18 +15,19 @@
     "prettier"  // Enable the Prettier plugin
   ],
   "rules": {
+    "prettier/prettier": "off",
     "no-unused-vars":"warn",
     "no-console": "off",
     "prefer-destructuring": ["error", {
       "array": true,
       "object": true
     }],
-    "prefer-template": "warn"
-//    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 1 }] //newline chained
-//    "no-unused-expressions": "off",
-//    "no-undef": "off",
-//    "prettier/prettier": "error",
-//    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "prefer-template": "warn",
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "indent": ["error", 2],
+    "comma-dangle": ["error", "always-multiline"],
+    "cypress/unsafe-to-chain-command": "off"
   },
   "parserOptions": {
     "sourceType": "module",

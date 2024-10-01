@@ -4,31 +4,37 @@ class ModulePage extends BasePage {
   constructor() {
     super();
 
-    // Input data
+    // selector
     this.inputInternalName = 'input[name="name"]';
     this.inputDisplayName = '[placeholder="Display Name"]';
     this.btnSubmit = 'button[type="submit"]';
     this.toggleAdvance = '#advancedToggle';
     this.btn = 'button';
     this.inputTrack = 'input[type="checkbox"]';
+    this.modulesWrapper = '.ng-scope';
+    this.verifyPageAppear = '.dx-scrollview-content';
 
     // Message verify
     this.messageCreatedSuccess = 'Select Workflow Process';
   }
 
   verifyAddNewModuleSuccessfully() {
-    return this.verifyHasText('body', this.messageCreatedSuccess);
+    return this.verifyHasText(this.verifyPageAppear, this.messageCreatedSuccess);
+  }
+
+  verifyNavigatedToModule() {
+    return this.verifyHasText(this.modulesWrapper, 'Modules');
   }
 
   createNewModule(module) {
-    this.navigate('/Home/V2#/module/create');
-    this.typeInInput(this.inputInternalName, module);
-    this.typeInInput(this.inputDisplayName, module);
-    this.clickElement(this.btnSubmit);
-    this.verifyAddNewModuleSuccessfully();
-    this.clickElementContains('.navigation-item h4', 'Inventory');
-    this.clickContainsElementHasAssertion(this.btnSubmit, 'Save', 'be.visible');
-    return this;
+    return this
+      .navigate('/Home/V2#/module/create')
+      .typeInInput(this.inputInternalName, module)
+      .typeInInput(this.inputDisplayName, module)
+      .clickElement(this.btnSubmit, 'be.visible')
+      .verifyAddNewModuleSuccessfully()
+      .clickElementContains('.navigation-item h4', 'Inventory')
+      .clickContainsElementHasAssertion(this.btnSubmit, 'Save', 'be.visible');
   }
 
   editModule(module) {
@@ -42,36 +48,33 @@ class ModulePage extends BasePage {
     return this;
   }
 
-  checkTrackOpeningOfItems(module) {
+  checkTrackOpeningOfItems() {
     this.log('Track Opening Of Items');
 
-    this.editModule(module);
-    this.clickElement(this.toggleAdvance);
+    cy.get(this.toggleAdvance).scrollIntoView().should('be.visible').click();
     cy.get('label:contains("Track opening/reading of items")')
       .parent()
       .find(this.inputTrack)
       .check({ force: true });
-    this.clickElement(this.btnSubmit);
+    cy.get(this.btnSubmit).scrollIntoView().should('be.visible').click();
     return this;
   }
 
-  uncheckTrackOpeningOfItems(module) {
-    this.log(' Uncheck track Opening Of Items');
+  uncheckTrackOpeningOfItems() {
+    this.log('Uncheck track Opening Of Items');
 
-    this.editModule(module);
-    this.clickElement(this.toggleAdvance);
+    cy.get(this.toggleAdvance).scrollIntoView().should('be.visible').click();
     cy.get('label:contains("Track opening/reading of items")')
       .parent()
       .find(this.inputTrack)
       .uncheck({ force: true });
-    this.clickElement(this.btnSubmit);
+    cy.get(this.btnSubmit).scrollIntoView().should('be.visible').click();
     this.loadPage();
     return this;
   }
 
   openModulePage(module) {
-    this.selectLeftMenu(module);
-    return this;
+    return this.selectLeftMenu(module);
   }
 
   deleteModule(module) {

@@ -23,73 +23,95 @@ describe('Should run grid page', () => {
 
   afterEach(() => {
     // To ensure that the deleteModule function runs after the tests
-    modulePage.log(`Cleanup: Deleting the module${modulePage}`);
-    modulePage.navigate('Home/V2#/module');
-    moduleName
-      ? modulePage.deleteModule(moduleName)
-      : modulePage.log('Module not found to delete');
+    modulePage
+      .log(`Cleanup: Deleting the module${modulePage}`)
+      .navigateToPage('Module')
+      .verifyNavigatedToModule()
+      .deleteModule(moduleName);
   });
 
   it('Verify that when feature is enabled/disable, unread items will /will not be highlighted with bold text.', () => {
     const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
     moduleName = module;
 
-    modulePage.log('Create new module');
-    modulePage.createNewModule(module);
-    modulePage.navigateToToolbarPage('Module');
+    modulePage
+      .log('Create new module')
+      .createNewModule(module)
+      .navigateToPage('Module')
 
-    modulePage.log('Mark before edit module');
-    modulePage.editModule(module);
-    modulePage.checkTrackOpeningOfItems(module);
-    modulePage.loadPage();
+      .log('Mark before edit module')
+      .editModule(module)
 
-    modulePage.log('Verify item is unread');
-    modulePage.navigate('/');
-    modulePage.openModulePage(module);
-    gridPage.createNewItem();
-    gridPage.checkTheRequestIsUnread(0);
+      .log('Check at track opening of items')
+      .checkTrackOpeningOfItems()
+      .loadPage()
 
-    modulePage.log('Uncheck in checkbox: Check Track Opening Of Items');
-    modulePage.navigateToToolbarPage('Module');
-    modulePage.uncheckTrackOpeningOfItems(module);
-    modulePage.loadPage();
+      .log('Verify item is unread')
+      .navigate('/')
+      .openModulePage(module);
 
-    modulePage.log('Verify item is read');
-    modulePage.navigate('/');
-    modulePage.openModulePage(module);
-    gridPage.createNewItem();
-    gridPage.checkTheRequestIsRead(0);
+    gridPage
+      .log('Create new item')
+      .createNewItem()
+      .checkTheRequestIsUnread();
+
+    modulePage
+      .log('Uncheck in checkbox: Check Track Opening Of Items')
+      .navigateToPage('Module')
+
+      .log('Edit module')
+      .editModule(module)
+
+      .log('Uncheck at track opening of items')
+      .uncheckTrackOpeningOfItems()
+      .loadPage();
+
+    modulePage
+      .log('Verify item is read')
+      .navigate('/')
+      .openModulePage(module);
+
+    gridPage
+      .log('Create new item')
+      .createNewItem()
+      .checkTheRequestIsRead(0);
   });
 
   it('Verify that item can be marked as read / unread manually.', () => {
     const module = `ModuleTest_${faker.number.int({ max: 1000000 })}`;
     moduleName = module;
 
-    modulePage.log('Create new module');
-    modulePage.createNewModule(module);
-    modulePage.navigateToToolbarPage('Module');
+    modulePage
+      .log('Create new module')
+      .createNewModule(module)
+      .navigateToPage('Module')
 
-    modulePage.log('Edit module');
-    modulePage.editModule(moduleName);
-    modulePage.checkTrackOpeningOfItems(moduleName);
-    modulePage.loadPage();
+      .log('Edit module')
+      .editModule(moduleName)
 
-    modulePage.log('Verify item is unread');
-    modulePage.navigate('/');
-    modulePage.openModulePage(moduleName);
+      .log('Check at track opening of items')
+      .checkTrackOpeningOfItems()
+      .loadPage()
 
-    gridPage.createNewItem();
-    gridPage.checkTheRequestIsUnread(0);
-    gridPage.log('Mark first item as read');
-    gridPage.markFirstItemAsRead();
+      .log('Verify item is unread')
+      .navigate('/')
+      .openModulePage(moduleName);
 
-    gridPage.log('Verify item is read');
-    gridPage.checkTheRequestIsRead(0);
+    gridPage
+      .log('Creat new item')
+      .createNewItem()
+      .checkTheRequestIsUnread()
 
-    gridPage.log('Mark first item as unread');
-    gridPage.markFirstItemAsUnread();
+      .log('Mark first item as unread')
+      .markFirstItemAsUnread()
 
-    gridPage.log('Verify item is unread');
-    gridPage.checkTheRequestIsUnread(0);
+      .log('Verify item is read')
+      .checkTheRequestIsRead()
+
+      .log('Mark first item as read')
+      .markFirstItemAsRead()
+
+      .log('Verify item is unread')
+      .checkTheRequestIsUnread();
   });
 });

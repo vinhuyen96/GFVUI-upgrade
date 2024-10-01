@@ -9,19 +9,21 @@ export default class ProfilePage extends BasePage {
   }
 
   clickOnChangePassword() {
-    cy.get('a').contains('Change Password').should('be.visible').click();
+    return this.cy.get('a').contains('Change Password').should('be.visible').click();
   }
 
   changePassword(currentPassword, newPassword) {
-    this.clickOnChangePassword();
-    this.typeInInput(this.inputCurrentPassword, currentPassword);
-    this.typeInInput(this.inputNewPassword, newPassword);
-    this.typeInInput(this.inputConfirmPassword, newPassword);
-    this.clickElementContains('a', 'Save');
+    return this
+      .clickOnChangePassword()
+      .typeInInput(this.inputCurrentPassword, currentPassword)
+      .typeInInput(this.inputNewPassword, newPassword)
+      .typeInInput(this.inputConfirmPassword, newPassword)
+      .clickElementContains('a', 'Save');
   }
 
   addSignature() {
-    this.clickElementContains('a', 'Add Signature');
-    this.clickElement('#dropzone-external');
+    return this
+      .clickElementContains('a', 'Add Signature')
+      .clickElement('#dropzone-external', 'be.visible');
   }
 }

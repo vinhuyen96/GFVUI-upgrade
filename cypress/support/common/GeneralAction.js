@@ -5,23 +5,29 @@ export default class GeneralAction {
    */
   navigate(url) {
     cy.visit(url);
+    return this;
   }
 
   /**
-   * Click on a element
+   * Click on an element
    * @param selector
+   * @param condition
+   * @param force
    */
-  clickElement(selector) {
-    cy.get(selector).click();
+  clickElement(selector, condition, force = false) {
+    cy.get(selector).should(condition).click({force: force});
+    return this;
   }
 
   /**
    * Click on a element which contains some text
    * @param selector
    * @param content
+   * @param force
    */
-  clickElementContains(selector, content) {
-    cy.get(selector).contains(content).click();
+  clickElementContains(selector, content, force = false) {
+    cy.get(selector).contains(content).click({force: force});
+    return this;
   }
 
   /**
@@ -29,9 +35,11 @@ export default class GeneralAction {
    * @param selector
    * @param content -Text that should be included
    * @param condition
+   * @param force
    */
-  clickContainsElementHasAssertion(selector, content, condition) {
-    cy.get(selector).contains(content).should(condition).click();
+  clickContainsElementHasAssertion(selector, content, condition, force = false) {
+    cy.get(selector).contains(content).should(condition).click({force: force});
+    return this;
   }
 
   /**
@@ -40,6 +48,7 @@ export default class GeneralAction {
    */
   clickFirstElement(selector) {
     cy.get(selector).first().click();
+    return this;
   }
 
   /**
@@ -49,6 +58,7 @@ export default class GeneralAction {
    */
   typeInInput(selector, text) {
     cy.get(selector).type(text);
+    return this;
   }
 
   /**
@@ -56,6 +66,7 @@ export default class GeneralAction {
    */
   loadPage() {
     cy.reload();
+    return this;
   }
 
   /**
@@ -64,6 +75,7 @@ export default class GeneralAction {
    */
   log(text) {
     cy.log(text);
+    return this;
   }
 
   /**
@@ -73,6 +85,7 @@ export default class GeneralAction {
    */
   verifyHasText(selector, text) {
     cy.get(selector).should('contain', text);
+    return this;
   }
 
   /**
@@ -83,9 +96,17 @@ export default class GeneralAction {
    */
   verifyShouldContains(selector, content, condition) {
     cy.get(selector).contains(content).should(condition);
+    return this;
   }
 
+  /**
+   * Verify an element
+   * @param selector
+   * @param condition
+   * @returns {GeneralAction}
+   */
   verifyShould(selector, condition) {
     cy.get(selector).should(condition);
+    return this;
   }
 }

@@ -4,14 +4,17 @@ class BasePage extends GeneralAction {
   constructor() {
     super();
     this.statusOfDrawerMenu = '.dx-drawer-opened';
+    this.menuElement = 'dx-toolbar a.toolbar-label';
+    this.hamburgerBtn = '.menu-button';
+    this.itemOnDrawer = '.dx-treeview-node-container';
   }
 
   /**
    * Navigate to route when click on header
    * @param page
    */
-  navigateToToolbarPage(page) {
-    this.clickElementContains('dx-toolbar a.toolbar-label', page);
+  navigateToPage(page) {
+    return this.clickElementContains(this.menuElement, page);
   }
 
   /**
@@ -20,7 +23,7 @@ class BasePage extends GeneralAction {
   openLeftMenu() {
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length === 0) {
-        this.clickElement('.dx-icon-menu');
+        this.clickElement('.dx-icon-menu', 'be.visible');
       }
     });
     return this;
@@ -33,7 +36,7 @@ class BasePage extends GeneralAction {
     // Make sure drawer is present before executing the click action.
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length !== 0) {
-        this.clickElement('.menu-button');
+        this.clickElement(this.hamburgerBtn, 'be.visible');
       }
     });
     return this;
@@ -45,14 +48,14 @@ class BasePage extends GeneralAction {
    */
   selectLeftMenu(item) {
     this.openLeftMenu();
-    this.clickElementContains('.dx-treeview-node-container', item);
+    this.clickElementContains(this.itemOnDrawer, item);
     this.closeLeftMenu();
     return this;
   }
 
   verifyHomePageIsOpen() {
     this.log('verify V2 HomePage Is Open');
-    cy.get('.menu-button').should('be.visible');
+    cy.get(this.hamburgerBtn).should('be.visible');
     return this;
   }
 }
