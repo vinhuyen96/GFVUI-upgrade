@@ -3,12 +3,16 @@ import BasePage from '../BasePage';
 class GridPage extends BasePage {
   constructor() {
     super();
-    this.iconEnvelopOpen = '.dx-icon.fas.fa-envelope-open';
+
+    // Grid action selector
     this.actionField = '.dx-datagrid-drag-action';
     this.btnAddNewItem = '.dx-button-content .dx-button-text';
-    this.btnSubmit = 'button';
+    this.btnSubmit = 'button.btn-primary';
+
+    // Icon selector
     this.iconEnvelopOpened = 'table tr .fa-envelope-open';
     this.iconEnvelopClosed = 'table tr .fa-envelope';
+    this.iconEnvelopOpen = '.dx-icon.fas.fa-envelope-open';
   }
 
   /**
@@ -26,28 +30,29 @@ class GridPage extends BasePage {
   }
 
   checkTheRequestIsRead() {
+    this.log('Check the envelope is opened');
     cy.get(this.actionField)
       .contains('Actions')
       .invoke('css', 'width', '500px')
       .trigger('change');
-    this.log('Check the envelope is opened');
     this.verifyShould(this.iconEnvelopOpen, 'not.exist');
     return this;
   }
 
   createNewItem() {
     return this
-      .clickElementContains(this.btnAddNewItem, 'NEW')
-      .clickElementContains(this.btnSubmit, 'Submit');
+      .clickElementContainsText(this.btnAddNewItem, 'NEW')
+      .clickElementContainsText(this.btnSubmit, 'Submit');
   }
 
   markFirstItemAsUnread() {
     return this
-      .clickFirstElement(this.iconEnvelopOpened);
+      .clickFirstElement(this.iconEnvelopClosed);
   }
 
   markFirstItemAsRead() {
-    return this.clickFirstElement(this.iconEnvelopClosed);
+    return this
+      .clickFirstElement(this.iconEnvelopClosed);
   }
 }
 

@@ -3,10 +3,15 @@ import GeneralAction from '../common/GeneralAction';
 class BasePage extends GeneralAction {
   constructor() {
     super();
+
+    // Menu selector
     this.statusOfDrawerMenu = '.dx-drawer-opened';
     this.menuElement = 'dx-toolbar a.toolbar-label';
     this.hamburgerBtn = '.menu-button';
     this.itemOnDrawer = '.dx-treeview-node-container';
+
+    // Loading selector
+    this.loadingWrapper = '.dx-loadpanel-content-wrapper';
   }
 
   /**
@@ -14,7 +19,16 @@ class BasePage extends GeneralAction {
    * @param page
    */
   navigateToPage(page) {
-    return this.clickElementContains(this.menuElement, page);
+    return this.clickElementContainsText(this.menuElement, page);
+  }
+
+  /**
+   * Verify detail module is visible
+   */
+  verifyPageStable() {
+    return this
+      .verifyShould(this.loadingWrapper, 'be.visible')
+      .verifyShould(this.loadingWrapper, 'be.not.visible');
   }
 
   /**
@@ -23,7 +37,7 @@ class BasePage extends GeneralAction {
   openLeftMenu() {
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length === 0) {
-        this.clickElement('.dx-icon-menu', 'be.visible');
+        this.clickElement('.dx-icon-menu');
       }
     });
     return this;
@@ -36,7 +50,7 @@ class BasePage extends GeneralAction {
     // Make sure drawer is present before executing the click action.
     cy.get('body').then(($body) => {
       if ($body.find(this.statusOfDrawerMenu).length !== 0) {
-        this.clickElement(this.hamburgerBtn, 'be.visible');
+        this.clickElement(this.hamburgerBtn);
       }
     });
     return this;
@@ -48,7 +62,7 @@ class BasePage extends GeneralAction {
    */
   selectLeftMenu(item) {
     this.openLeftMenu();
-    this.clickElementContains(this.itemOnDrawer, item);
+    this.clickElementContainsText(this.itemOnDrawer, item);
     this.closeLeftMenu();
     return this;
   }

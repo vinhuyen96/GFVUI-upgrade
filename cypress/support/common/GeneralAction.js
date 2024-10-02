@@ -11,34 +11,21 @@ export default class GeneralAction {
   /**
    * Click on an element
    * @param selector
-   * @param condition
-   * @param force
+   * @param isForce
    */
-  clickElement(selector, condition, force = false) {
-    cy.get(selector).should(condition).click({force: force});
+  clickElement(selector, isForce = false) {
+    cy.get(selector).should('exist').click({ force: isForce });
     return this;
   }
 
   /**
    * Click on an element which contains some text
    * @param selector
-   * @param content
-   * @param force
+   * @param text
+   * @param isForce
    */
-  clickElementContains(selector, content, force = false) {
-    cy.get(selector).contains(content).click({force: force});
-    return this;
-  }
-
-  /**
-   * Click on an element which contain some text that has assertion
-   * @param selector
-   * @param content -Text that should be included
-   * @param condition
-   * @param force
-   */
-  clickContainsElementHasAssertion(selector, content, condition, force = false) {
-    cy.get(selector).contains(content).should(condition).click({force: force});
+  clickElementContainsText(selector, text, isForce = false) {
+    cy.get(selector).contains(text).click({ force: isForce });
     return this;
   }
 
@@ -83,7 +70,7 @@ export default class GeneralAction {
    * @param selector - The element that is selected
    * @param text - Test should be included
    */
-  verifyHasText(selector, text) {
+  verifyTextVisible(selector, text) {
     cy.get(selector).should('contain', text);
     return this;
   }
@@ -91,11 +78,11 @@ export default class GeneralAction {
   /**
    * Verify Text of selector with condition
    * @param selector - The selector
-   * @param content
+   * @param text
    * @param condition
    */
-  verifyShouldContains(selector, content, condition) {
-    cy.get(selector).contains(content).should(condition);
+  verifyShouldContainsText(selector, text, condition) {
+    cy.get(selector).contains(text).should(condition);
     return this;
   }
 

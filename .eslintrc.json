@@ -7,8 +7,8 @@
   "extends": [
     "eslint:recommended", // Add this line to enable Prettier
     "plugin:cypress/recommended",
-    "plugin:prettier/recommended" // Add this line to enable Prettier
-//    "airbnb"
+    "plugin:prettier/recommended", // Add this line to enable Prettier
+    "airbnb"
   ],
   "plugins": [
     "cypress",

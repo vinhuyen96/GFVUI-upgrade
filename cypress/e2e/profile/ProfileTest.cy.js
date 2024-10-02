@@ -8,7 +8,7 @@ describe('Profile Test', () => {
   const profilePage = new ProfilePage();
 
   let currentPassword;
-  let newPassword = faker.internet.password();
+  const newPassword = faker.internet.password();
 
   beforeEach(() => {
     cy.fixture('account').then((account) => {
@@ -19,19 +19,20 @@ describe('Profile Test', () => {
         account.exampleAccount.password,
       );
 
-      profilePage.navigate('/Home/V2#/profile');
-      profilePage.verifyHomePageIsOpen();
-      profilePage.closeLeftMenu(); // Because element is hiding when left menu is open. So we need to close it
+      profilePage
+        .navigate('/Home/V2#/profile')
+        .verifyHomePageIsOpen()
+        .closeLeftMenu();
+      // Because element is hiding when left menu is open. So we need to close it
     });
   });
 
   it('Change Password', () => {
     profilePage.changePassword(currentPassword, newPassword);
 
-    profilePage.verifyShouldContains(
+    profilePage.verifyShouldContainsText(
       'div',
       'Password changed successfully',
-      'be.visible',
     );
 
     // Change pwd back
@@ -41,7 +42,7 @@ describe('Profile Test', () => {
   it('Remove Signature', () => {
     profilePage.addSignature();
     profilePage.verifyShould('#dropzone-image', 'exist');
-    profilePage.clickElementContains('a', 'Cancel');
+    profilePage.clickElementContainsText('a', 'Cancel');
     // think the way to wait page load
     profilePage.verifyShould('#dropzone-image', 'not.exist');
   });

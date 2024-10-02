@@ -18,12 +18,12 @@ export default class ProfilePage extends BasePage {
       .typeInInput(this.inputCurrentPassword, currentPassword)
       .typeInInput(this.inputNewPassword, newPassword)
       .typeInInput(this.inputConfirmPassword, newPassword)
-      .clickElementContains('a', 'Save');
+      .clickElementContainsText('a', 'Save');
   }
 
   addSignature() {
     return this
-      .clickElementContains('a', 'Add Signature')
+      .clickElementContainsText('a', 'Add Signature')
       .clickElement('#dropzone-external', 'be.visible');
   }
 }
